@@ -4,6 +4,8 @@ version := "0.1"
 
 scalaVersion := "2.13.5"
 
+ThisBuild / useCoursier := false
+
 idePackagePrefix := Some("com.endsoul.fp.scala")
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.5" % "test"

@@ -104,7 +104,7 @@
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.12.12/org.scala-sbt/sbt/1.4.7/zinc-persist-core-assembly-1.4.4.jar!/" />
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.12.12/org.scala-sbt/sbt/1.4.7/zinc-persist_2.12-1.4.4.jar!/" />
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.12.12/org.scala-sbt/sbt/1.4.7/zinc_2.12-1.4.4.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../null/Coursier/cache/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/org.jetbrains/sbt-ide-settings/scala_2.12/sbt_1.0/1.1.0/jars/sbt-ide-settings.jar!/" />
+          <root url="jar://$USER_HOME$/AppData/Local/Coursier/Cache/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/org.jetbrains/sbt-ide-settings/scala_2.12/sbt_1.0/1.1.0/jars/sbt-ide-settings.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
