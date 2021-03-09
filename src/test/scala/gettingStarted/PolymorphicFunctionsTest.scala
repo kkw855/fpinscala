@@ -19,4 +19,31 @@ class PolymorphicFunctionsTest extends UnitSpec {
       PolymorphicFunctions.isSorted[String](Array("A", "D", "F"), _ < _)
     }
   }
+
+  // Exercise 3: 인수가 두 개인 함수 f를 인수 하나를 받고 그것으로 f를 부분 적용하는 함수로 변환하는 커링
+  it should "인수가 두 개인 함수 f를 인수 하나를 받고 그것으로 f를 부분 적용하는 함수로 변환한다" in {
+    assertResult(15) {
+      val partial = PolymorphicFunctions.curry((a: Int, b: Int) => a + b)
+      val partialA = partial(5)
+      partialA(10)
+    }
+  }
+
+  // Exercise 4: curry 의 변환을 역으로 수행하는 고차 함수 uncurry
+  it should "curry 의 변환을 역으로 수행하는 고차 함수 uncurry 를 구현한다" in {
+    assertResult(15) {
+      val notPartial =
+        PolymorphicFunctions.uncurry((a: Int) => (b: Int) => a + b)
+      notPartial(5, 10)
+    }
+  }
+
+  // Exercise 5: 두 함수를 합성하는 고차 함수
+  it should "두 함수를 합성하는 고차 함수를 구현한다" in {
+    assertResult("2020 years!!!") {
+      val composed = PolymorphicFunctions.compose((b: String) => b ++ "!!!",
+                                                  (a: Int) => s"$a years")
+      composed(2020)
+    }
+  }
 }
