@@ -1,5 +1,5 @@
 package com.endsoul.fp.scala
-package gettingStarted
+package getting_started
 
 class PolymorphicFunctionsTest extends UnitSpec {
   // 배열에서 한 요소를 찾는 다형적 함수
@@ -12,7 +12,7 @@ class PolymorphicFunctionsTest extends UnitSpec {
     }
   }
 
-  // Exercise 2: 배열을 주어진 비교 함수에 의거해서 정렬되어 있는지 점검
+  // Exercise 2.2
   it should "배열을 주어진 비교 함수에 의거해서 정렬되어 있는지 점검한다" in {
     assertResult(true) {
       PolymorphicFunctions.isSorted[Int](Array(1, 3, 5), _ < _)
@@ -20,7 +20,7 @@ class PolymorphicFunctionsTest extends UnitSpec {
     }
   }
 
-  // Exercise 3: 인수가 두 개인 함수 f를 인수 하나를 받고 그것으로 f를 부분 적용하는 함수로 변환하는 커링
+  // Exercise 2.3
   it should "인수가 두 개인 함수 f를 인수 하나를 받고 그것으로 f를 부분 적용하는 함수로 변환한다" in {
     assertResult(15) {
       val partial = PolymorphicFunctions.curry((a: Int, b: Int) => a + b)
@@ -29,7 +29,7 @@ class PolymorphicFunctionsTest extends UnitSpec {
     }
   }
 
-  // Exercise 4: curry 의 변환을 역으로 수행하는 고차 함수 uncurry
+  // Exercise 2.4
   it should "curry 의 변환을 역으로 수행하는 고차 함수 uncurry 를 구현한다" in {
     assertResult(15) {
       val notPartial =
@@ -38,7 +38,7 @@ class PolymorphicFunctionsTest extends UnitSpec {
     }
   }
 
-  // Exercise 5: 두 함수를 합성하는 고차 함수
+  // Exercise 2.5: 두 함수를 합성하는 고차 함수
   it should "두 함수를 합성하는 고차 함수를 구현한다" in {
     assertResult("2020 years!!!") {
       val composed = PolymorphicFunctions.compose((b: String) => b ++ "!!!",

@@ -1,5 +1,5 @@
 package com.endsoul.fp.scala
-package gettingStarted
+package getting_started
 
 import scala.annotation.tailrec
 
@@ -44,5 +44,5 @@ object PolymorphicFunctions {
     (a: A, b: B) => f(a)(b)
 
   def compose[A, B, C](f: B => C, g: A => B): A => C =
-    (a: A) => f(g(a))
+    (a: A) => (g andThen f)(a)
 }
