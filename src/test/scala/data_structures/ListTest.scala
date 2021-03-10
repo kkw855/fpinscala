@@ -56,7 +56,24 @@ class ListTest extends UnitSpec {
   }
 
   // Exercise 3.9
-//  it should "목록의 길이를 계산한다" in {
-//    length(List(1, 2, 3, 4, 5)) shouldBe 5
-//  }
+  it should "목록의 길이를 계산한다" in {
+    length(List(1, 2, 3, 4, 5)) shouldBe 5
+  }
+
+  // Exercise 3.10
+  it should "스택에 안전한 foldLeft 를 구현한다" in {
+    foldLeft(list, Nil: List[Int])(Cons(_, _)) shouldBe List(5, 4, 3, 2, 1)
+  }
+
+  // Exercise 3.11
+  it should "sum, product, length 계산하는 함수를 foldLeft 를 이용해서 구현한다" in {
+    sum3(list) shouldBe 15
+    product3(List(1.0, 2.0, 3.0, 4.0, 5.0)) shouldBe 120
+    length3(list) shouldBe 5
+  }
+
+  // Exercise 3.12
+  it should "목록의 역을 돌려주는 함수를 구현한다" in {
+    reverse(list) shouldBe List(5, 4, 3, 2, 1)
+  }
 }

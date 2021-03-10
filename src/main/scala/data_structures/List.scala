@@ -12,7 +12,7 @@ object List {
     if (as.isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
 
-  def sum[A](ints: List[Int]): Int = ints match {
+  def sum(ints: List[Int]): Int = ints match {
     case Nil        => 0
     case Cons(h, t) => h + sum(t)
   }
@@ -54,6 +54,27 @@ object List {
     case Cons(h, t) => f(h, foldRight(t, z)(f))
   }
 
-  def product2[A](as: List[Double]): Double =
+  def product2(as: List[Double]): Double =
     foldRight(as, 1.0)(_ * _)
+
+  def length[A](as: List[A]): Int =
+    foldRight(as, 0)((_, b) => 1 + b)
+
+  @tailrec
+  def foldLeft[A, B](as: List[A], z: B)(f: (A, B) => B): B = as match {
+    case Nil        => z
+    case Cons(h, t) => foldLeft(t, f(h, z))(f)
+  }
+
+  def sum3(as: List[Int]): Int =
+    foldLeft(as, 0)(_ + _)
+
+  def product3(as: List[Double]): Double =
+    foldLeft(as, 1.0)(_ * _)
+
+  def length3[A](as: List[A]): Int =
+    foldLeft(as, 0)((_, b) => 1 + b)
+
+  def reverse[A](as: List[A]): List[A] =
+    foldLeft(as, Nil: List[A])(Cons(_, _))
 }
