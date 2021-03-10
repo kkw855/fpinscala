@@ -62,7 +62,11 @@ class ListTest extends UnitSpec {
 
   // Exercise 3.10
   it should "스택에 안전한 foldLeft 를 구현한다" in {
-    foldLeft(list, Nil: List[Int])(Cons(_, _)) shouldBe List(5, 4, 3, 2, 1)
+    foldLeft(list, Nil: List[Int])((acc, h) => Cons(h, acc)) shouldBe List(5,
+                                                                           4,
+                                                                           3,
+                                                                           2,
+                                                                           1)
   }
 
   // Exercise 3.11
@@ -75,5 +79,22 @@ class ListTest extends UnitSpec {
   // Exercise 3.12
   it should "목록의 역을 돌려주는 함수를 구현한다" in {
     reverse(list) shouldBe List(5, 4, 3, 2, 1)
+  }
+
+  // Exercise 3.13
+  it should "foldRight 를 foldLeft 를 이용해서, foldLeft 를 foldRight 를 이용해서 구현한다" in {
+    foldRightViaFoldLeft(list, Nil: List[Int])(Cons(_, _)) shouldBe list
+    // TODO: 나머지도 구현
+  }
+
+  // Exercise 3.14
+  it should "foldRight 를 이용해서 append 를 구현한다" in {
+    append(list, 6) shouldBe List(1, 2, 3, 4, 5, 6)
+  }
+
+  // Exercise 3.15
+  it should "목록들의 목록을 하나의 목록으로 연결한다" in {
+    val list = List(List(1, 2), List(3, 4), List(5))
+    concat(list) shouldBe List(1, 2, 3, 4, 5)
   }
 }
