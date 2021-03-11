@@ -87,4 +87,35 @@ object List {
   def concat[A, B](as: List[List[A]]): List[A] =
     foldLeft(as, List[A]())((acc, l) =>
       foldLeft(l, acc)((acc, h) => append(acc, h)))
+
+  def add1(as: List[Int]): List[Int] =
+    foldRight(as, Nil: List[Int])((h, acc) => Cons(h + 1, acc))
+
+  def doubleToString(as: List[Double]): List[String] =
+    foldRight(as, Nil: List[String])((h, acc) => Cons(h.toString, acc))
+
+  def map[A, B](as: List[A])(f: A => B): List[B] =
+    foldRight(as, Nil: List[B])((h, acc) => Cons(f(h), acc))
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] =
+    foldRight(as, Nil: List[A])((h, acc) => if (f(h)) Cons(h, acc) else acc)
+
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] =
+    concat(map(as)(f))
+
+  def filter2[A](as: List[A])(f: A => Boolean): List[A] =
+    flatMap(as)(a => if (f(a)) Cons(a, Nil) else Nil)
+
+  def addPairwise(as: List[Int], bs: List[Int]): List[Int] = (as, bs) match {
+    case (Nil, _)                     => Nil
+    case (_, Nil)                     => Nil
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addPairwise(t1, t2))
+  }
+
+  def zipWith(as: List[Int], bs: List[Int])(f: (Int, Int) => Int): List[Int] =
+    (as, bs) match {
+      case (Nil, _)                     => Nil
+      case (_, Nil)                     => Nil
+      case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
+    }
 }
