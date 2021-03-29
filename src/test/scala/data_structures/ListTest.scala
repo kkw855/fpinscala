@@ -2,7 +2,6 @@ package com.endsoul.fp.scala
 package data_structures
 
 import List._
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class ListTest extends UnitSpec {
   val intList: List[Int] = List(1, 2, 3, 4, 5)
@@ -57,7 +56,7 @@ class ListTest extends UnitSpec {
 
   // Exercise 3.9
   it should "목록의 길이를 계산한다" in {
-    length(List(1, 2, 3, 4, 5)) shouldBe 5
+    List.length(List(1, 2, 3, 4, 5)) shouldBe 5
   }
 
   // Exercise 3.10
