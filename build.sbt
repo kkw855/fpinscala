@@ -16,12 +16,16 @@ libraryDependencies += "org.typelevel" %% "cats-core" % "2.1.0" withSources () w
 libraryDependencies += "org.typelevel" %% "cats-kernel" % "2.1.0" withSources () withJavadoc ()
 libraryDependencies += "org.typelevel" %% "cats-macros" % "2.1.0" withSources () withJavadoc ()
 
+libraryDependencies += "org.typelevel" %% "cats-effect" % "3.1.1" withSources () withJavadoc ()
+
 // For Scala 2.13+
 scalacOptions ++= Seq(
+  "-feature",
   "-deprecation",
+  "-unchecked",
   "-encoding",
   "UTF-8",
   "-Xfatal-warnings",
-  "-feature",
-  "-language:implicitConversions"
+  "-language:implicitConversions",
+  "-language:postfixOps"
 )
