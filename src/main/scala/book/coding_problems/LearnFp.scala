@@ -129,13 +129,50 @@ object LearnFp extends App {
   val func2: Function2[Double, Double, Double] = (a: Double, b: Double) => a + b
   println(func2.toString)
 
-  case class A[T](a: T)
-  case class B[T](b: T)
+  // implicit conversion: 함수(메서드) 주입
+
+  case class A[T](a: T) {
+    def doA(): T = a.a
+  }
+  case class B[T](b: T) {
+    def doB(): T = b.b
+  }
   implicit def a2A[T](a: T): A[T] = A(a)
   implicit def b2B[T](a: T): B[T] = B(a)
-  def ab[C](a: B[A[C]]): Unit = println(a)
+  // implicit parameter: 함수 호출시에 파라미터 자동 주입
+  def ab[C](name: String)(a: A[C])(implicit b: B[C]): Unit =
+    println(s"$name$a$b")
 
-  println(ab(A("A")))
-//  ab("A")
+  implicit val b = B("[Implicit]")
+  ab("1")(A("A"))
 
+  // implicit parameter 로 함수를 사용할 수 있다
+  implicit def randomLong: Long = scala.util.Random.nextLong()
+  def withTimestamp(s: String)(implicit time: Long): Unit =
+    println(s"$time: $s")
+
+  withTimestamp("First")
+  withTimestamp("Second")
+
+  implicit def a2b[T](a: A[T]): B[T] = B(a.a)
+  A("I'm an A").doB
+
+  implicit class C[T](a: A[T]) {
+    def doC(): T = a.a
+  }
+
+  trait CanEqual[T] {
+    def hash(t: T): Int
+  }
+
+  def equal[CA, CB](a: CA, b: CB)(implicit ca: CanEqual[CA],
+                                  cb: CanEqual[CB]): Boolean =
+    ca.hash(a) == cb.hash(b)
+
+  def equalDelegate[CA: CanEqual, CB: CanEqual](a: CA, b: CB): Boolean =
+    equal(a, b)
+
+  implicit val stringEqual: CanEqual[String] = new CanEqual[String] {
+    def hash(t: String): Int = t.hashCode
+  }
 }
