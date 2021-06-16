@@ -8,7 +8,9 @@ ThisBuild / useCoursier := false
 
 idePackagePrefix := Some("com.endsoul.fp.scala")
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.5" % "test"
+// "% TEST" 를 붙이면 해당 라이브러리를 test 폴더에서만 사용 가능하다. main 폴더에서만 import 불가능.
+libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.0" % Test
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.5" % Test
 
 libraryDependencies += "org.typelevel" %% "simulacrum" % "1.0.0"
 

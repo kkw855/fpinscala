@@ -155,8 +155,9 @@ object LearnFp extends App {
   withTimestamp("Second")
 
   implicit def a2b[T](a: A[T]): B[T] = B(a.a)
-  A("I'm an A").doB
+  A("I'm an A").doB()
 
+  // implicit class: implicit conversion 과는 다르게 직접 함수 정의를 포함할 수 있다
   implicit class C[T](a: A[T]) {
     def doC(): T = a.a
   }
@@ -174,5 +175,60 @@ object LearnFp extends App {
 
   implicit val stringEqual: CanEqual[String] = new CanEqual[String] {
     def hash(t: String): Int = t.hashCode
+  }
+
+  case class Usb(orientation: Boolean)
+  case class Lightning(length: Int)
+  case class UsbC[Kind](kind: Kind)
+
+  trait Cable[C] {
+    def connect(c: C): Boolean
+  }
+
+  implicit val usbCable: Cable[Usb] = new Cable[Usb] {
+    def connect(c: Usb): Boolean = c.orientation
+  }
+
+  implicit val lightningCable: Cable[Lightning] = (_: Lightning).length > 100
+
+  // implicit val usbCCable = new Cable[UsbC] {}
+
+  implicit val usbCCableString: Cable[UsbC[String]] =
+    (_: UsbC[String]).kind.contains("USB 3.1")
+
+  def connectCable[C: Cable](c: C): Boolean = implicitly[Cable[C]].connect(c)
+
+  connectCable(Usb(false))
+  connectCable(Lightning(150))
+  connectCable(UsbC("USB 3.1"))
+
+  val opt1: Option[Int] = None
+  val opt2: Option[String] = Some("Option")
+  val empty = Option.empty[String]
+  val temperature: Int = 26
+  def readExactTemperature: Double = 26.3425
+  val temp1 = Option.when({
+    temperature > 45
+    temperature > 50
+  })(readExactTemperature)
+  val temp2 = Option.unless(temperature < 45)(readExactTemperature)
+  println(temp1)
+  println(temp2)
+
+  val userInput = "1234567890"
+
+  val left: Left[String, Nothing] = Left("Error")
+  val leftWithRight: Either[String, Int] = left.withRight[Int]
+
+  trait Semigroup[S] {
+    def op(l: S, r: S): S
+  }
+
+  final case class Fish(volume: Int, size: Int, teeth: Int, poisonousness: Int)
+  implicit val volumeSemigroup: Semigroup[Fish] = new Semigroup[Fish] {
+    def op(l: Fish, r: Fish): Fish = {
+      val result = if (l.volume >= r.volume) l else r
+      result.copy(volume = r.volume + l.volume)
+    }
   }
 }
