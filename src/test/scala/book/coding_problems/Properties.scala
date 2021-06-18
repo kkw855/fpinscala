@@ -1,9 +1,10 @@
 package com.endsoul.fp.scala
 package book.coding_problems
 
+import com.endsoul.fp.scala.book.coding_problems.LearnFp.Fish
 import org.scalacheck.Gen.const
 import org.scalacheck.Prop.{AnyOperators, all, atLeastOne, propBoolean, within}
-import org.scalacheck.{Gen, Prop, Test}
+import org.scalacheck.{Arbitrary, Gen, Prop, Test}
 
 object Properties extends App {
   import org.scalacheck.Prop.forAll
@@ -81,4 +82,23 @@ object Properties extends App {
     val stringProps = atLeastOne(d.isEmpty, d.nonEmpty)
     all(multiplicationLaws, stringProps)
   }.check()
+
+  sealed trait Rank
+  case class SymRank(s: Char) extends Rank {
+    override def toString: String = s.toString
+  }
+  case class NumRank(n: Int) extends Rank {
+    override def toString: String = n.toString
+  }
+  case class Card(suit: Char, rank: Rank) {
+    override def toString = s"$suit $rank"
+  }
+
+  val fishGen: Gen[Fish] = for {
+    weight <- Gen.posNum[Int]
+    volume <- Gen.posNum[Int]
+    poisonousness <- Gen.posNum[Int]
+    teeth <- Gen.posNum[Int]
+  } yield Fish(volume, weight, teeth, poisonousness)
+  implicit val arbFish: Arbitrary[Fish] = Arbitrary(fishGen)
 }
